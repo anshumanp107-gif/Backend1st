@@ -4,11 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .headi{
+            color: rgb(195, 174, 148);
+        }
+        body{
+            color: aliceblue;
+            background: #3f3d3d;
+        }
+        .container{
+            background: rgb(108, 95, 95);
+        }
+        span{
+            color: blue;
+        }
+        .logout{
+            color: #020202;
+            background: #b12f2f;
+            border: none;
+        }
+        .logout:hover{
+            background: red;
+            box-shadow: 0 0 20px red;
+        }
+        .post{
+            background: #19a1c3;
+            border: none;
+        }
+        .post:hover{
+            box-shadow: 0 0 20px rgb(1, 253, 241);
+        }
+    </style>
 </head>
 <body>
-    <h1>Profile</h1>
-    <form action="/logout" method="get">
-        <input type="submit" value="Logout">
-    </form>
+    <h1 class="headi">Profile</h1>
+    
+        <h3>Hello <%= user.name %> ji</h3>
+        <form action="/post" method="post">
+            <textarea name="content" placeholder="Whan'a create something..."></textarea><br>
+            <input class="post" type="submit" value="Post"><br><br><br>
+        </form>
+
+        <h2>Your Posts:</h2><br>
+        
+        <div class="container">
+            <% user.posts.reverse().forEach(function(post){ %>
+                <h3><span>@<%= user.name %></span></h3>
+                <h4><%= post.content %></h4>
+            <%})%>
+        </div>
+    <form action="/logout" method="post">
+        <input class="logout" type="submit" value="Logout">
+     </form>
 </body>
 </html>

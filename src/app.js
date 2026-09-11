@@ -7,12 +7,14 @@ const postModel = require("./models/post");
 const jwt = require("jsonwebtoken")
 const cookie = require("cookie-parser")
 const { hash } = require('crypto');
+const cookieParser = require('cookie-parser');
 
 app.set("view engine","ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
 
 app.get("/",(req,res)=>{
     res.render("index")
@@ -59,13 +61,36 @@ app.post("/signUp",async (req,res)=>{
     })
 })
 
-app.get("/profile",(req,res)=>{
-    res.render("profile")
+app.get("/profile",isLogedIn,async (req,res)=>{
+    let user = await userModel.findOne({email:req.user.email}).populate("posts")
+    res.render("profile",{user:user})
 })
 
 app.get("/logout",(req,res)=>{
     res.cookie("token","")
     res.redirect("/login")
 })
+
+app.post("/post",isLogedIn,async (req,res)=>{
+    let user = await userModel.findOne({email:req.user.email})
+    let {content} = req.body
+    let post = await postModel.create({
+        user : user._id,
+        content: content
+    })
+    user.posts.push(post._id)
+    await user.save();
+    res.redirect("/profile")
+})
+
+function isLogedIn(req,res,next){
+    if(!req.cookies.token) {
+        return res.send("You must be logged in")
+    }
+    let data = jwt.verify(req.cookies.token,"shhhh");
+    req.user = data;
+    next();
+}
+
 
 module.exports = app
