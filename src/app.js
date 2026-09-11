@@ -83,6 +83,11 @@ app.post("/post",isLogedIn,async (req,res)=>{
     res.redirect("/profile")
 })
 
+app.get("/feed",isLogedIn,async (req,res)=>{
+    let posts = await postModel.find().populate("user")
+    res.render("feed",{posts:posts})
+})
+
 function isLogedIn(req,res,next){
     if(!req.cookies.token) {
         return res.send("You must be logged in")

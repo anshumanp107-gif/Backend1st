@@ -12,8 +12,13 @@
             color: aliceblue;
             background: #3f3d3d;
         }
-        .container{
-            background: rgb(108, 95, 95);
+        
+        .test{
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding: 5px;
+            background: #3b3636;
         }
         span{
             color: blue;
@@ -34,10 +39,14 @@
         .post:hover{
             box-shadow: 0 0 20px rgb(1, 253, 241);
         }
+        a{
+            color: aquamarine;
+        }
     </style>
 </head>
 <body>
     <h1 class="headi">Profile</h1>
+        <a href="/feed">Home</a>
     
         <h3>Hello <%= user.name %> ji</h3>
         <form action="/post" method="post">
@@ -49,11 +58,13 @@
         
         <div class="container">
             <% user.posts.reverse().forEach(function(post){ %>
-                <h3><span>@<%= user.name %></span></h3>
-                <h4><%= post.content %></h4>
+                <div class="test">
+                    <h3><span>@<%= user.name %></span></h3>
+                    <h4><%= post.content %></h4>
+                </div>
             <%})%>
         </div>
-    <form action="/logout" method="post">
+    <form action="/logout" method="get">
         <input class="logout" type="submit" value="Logout">
      </form>
 </body>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: #000;
+            color: antiquewhite;
+        }
+        .profile{
+            color: aliceblue;
+            background: rgb(103, 103, 74);
+        }
+        span{
+            color: aqua;
+        }
+        .test{
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 20px;
+            padding: 5px;
+            background: #3b3636;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="headi">Home</h1>
+        <h2>Feed</h2>
+        <a class="profile" href="/profile">Your's Profile</a>
+        <br>
+        <div class="container">
+            <% posts.reverse().forEach(function(post){ %>
+                <div class="test">
+                    <h3><span>@<%= post.user.name %></span></h3>
+                    <h4><%= post.content %></h4>
+                </div>
+            <%})%>
+        </div>
+</body>
+</html>
